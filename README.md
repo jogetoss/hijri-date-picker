@@ -1,6 +1,13 @@
 # Description
 
-This repository is meant to serve as a general template for how to set up new repositories in the JogetOSS organization. 
+**This plugin is still in development process**
+
+Hijri date picker plugin is a form element which allows to select/pick date in Hijri format.
+
+## Features
+* The date picker is in Hijri Format
+* Allows to store and load the dates / previous values
+* Allow to customize the display date formats e.g. yy-mm-dd, dd-mm-yy etc
 
 # Getting Help
 
