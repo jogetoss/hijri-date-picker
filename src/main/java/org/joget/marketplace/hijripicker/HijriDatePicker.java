@@ -43,7 +43,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getName() {
-        return "Simple Hijri Date Picker";
+        return "Hijri Date Picker";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getLabel() {
-        return "Simple Hijri Date Picker";
+        return "Hijri Date Picker";
     }
 
     @Override
