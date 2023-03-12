@@ -8,6 +8,8 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joget.apps.app.service.AppUtil;
@@ -63,20 +65,22 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
             long longTime = 0;
             String value = FormUtil.getElementPropertyValue(this, formData);
             //String binderValue = formData.getLoadBinderDataProperty(this, id);
-            if (value != null && !value.isEmpty()) {
-                // convert the data into the timestamp
-                String format = getPropertyString("format");
-                if (format != null && !format.isEmpty()) {
-                    longTime = processDate(value, format);
-                } else {
-                    longTime = processDate(value, DEFAULT_DISPLAY_FORMAT);
+            if (!FormUtil.isReadonly(this, formData)) {
+                if (value != null && !value.isEmpty()) {
+                    // convert the data into the timestamp
+                    String format = getPropertyString("format");
+                    if (format != null && !format.isEmpty()) {
+                        longTime = processDate(value, format);
+                    } else {
+                        longTime = processDate(value, DEFAULT_DISPLAY_FORMAT);
+                    }
                 }
-            }
-            if (value != null && !value.isEmpty()) {
-                FormRow result = new FormRow();
-                result.setProperty(id, String.valueOf(longTime));
-                rowSet = new FormRowSet();
-                rowSet.add(result);
+                if (value != null && !value.isEmpty()) {
+                    FormRow result = new FormRow();
+                    result.setProperty(id, String.valueOf(longTime));
+                    rowSet = new FormRowSet();
+                    rowSet.add(result);
+                }
             }
         }
         return rowSet;
@@ -96,10 +100,20 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
     private String hijriDisplayFormat(String displayFormat) {
         String hijriDisplayFormat = getJavaDateFormat(displayFormat);
         hijriDisplayFormat = hijriDisplayFormat.toUpperCase();
-        hijriDisplayFormat = hijriDisplayFormat.replaceAll("DD", "iDD");
-        hijriDisplayFormat = hijriDisplayFormat.replaceAll("MM", "iMM");
-        hijriDisplayFormat = hijriDisplayFormat.replaceAll("YYYY", "iYYYY");
+        hijriDisplayFormat = fixHijriFormat(hijriDisplayFormat, "D+");
+        hijriDisplayFormat = fixHijriFormat(hijriDisplayFormat, "M+");
+        hijriDisplayFormat = fixHijriFormat(hijriDisplayFormat, "Y+");
         return hijriDisplayFormat;
+    }
+
+    private String fixHijriFormat(String format, String regEx) {
+        String matchedGroup = "";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(format);
+        if (matcher.find()) {
+            matchedGroup = matcher.group();
+        }
+        return format.replaceAll(regEx, "i" + matchedGroup);
     }
 
     protected static String getJavaDateFormat(String format) {
