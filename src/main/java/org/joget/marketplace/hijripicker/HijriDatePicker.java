@@ -36,14 +36,17 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
                 displayFormat = DEFAULT_DISPLAY_FORMAT;
             }
 
-            String javaDateFormat = getJavaDateFormat(displayFormat);
-            DateTime dt = new DateTime(Long.parseLong(value));
-            int calYear = dt.get(DateTimeFieldType.year());
-            int calMonth = dt.get(DateTimeFieldType.monthOfYear());
-            int calDay = dt.get(DateTimeFieldType.dayOfMonth());
-            LocalDate date = LocalDate.of(calYear, calMonth, calDay);
-            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(javaDateFormat);
-            value = HijrahChronology.INSTANCE.date(date).format(formatter);
+            boolean isValidTimestamp = isValidTimestamp(value);
+            if (isValidTimestamp) {
+                String javaDateFormat = getJavaDateFormat(displayFormat);
+                DateTime dt = new DateTime(Long.parseLong(value));
+                int calYear = dt.get(DateTimeFieldType.year());
+                int calMonth = dt.get(DateTimeFieldType.monthOfYear());
+                int calDay = dt.get(DateTimeFieldType.dayOfMonth());
+                LocalDate date = LocalDate.of(calYear, calMonth, calDay);
+                final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(javaDateFormat);
+                value = HijrahChronology.INSTANCE.date(date).format(formatter);
+            }
         }
 
         String hijriDisplayFormat = "iDD-iMM-iYYYY";
@@ -84,6 +87,18 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
             }
         }
         return rowSet;
+    }
+    
+    public static boolean isValidTimestamp(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private long processDate(String value, String format) {
