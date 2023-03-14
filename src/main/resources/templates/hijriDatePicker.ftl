@@ -13,13 +13,16 @@
         <div class="form-cell-value"><span>${value!?html}</span></div>
         <input id="${elementParamName!}" name="${elementParamName!}" class="textfield_${element.properties.elementUniqueKey!}" type="hidden" value="${value!?html}" />
     <#else>
-        <input id="${elementParamName!}_${element.properties.elementUniqueKey!}" name="${elementParamName!}" autocomplete="off" class="textfield_${element.properties.elementUniqueKey!}" type="text" size="" value="${value!?html}" maxlength="100" <#if error??>class="form-error-cell"</#if> <#if element.properties.readonly! == 'true'>readonly</#if> placeholder="<#if (element.properties.placeholder! != '')>${element.properties.placeholder!?html}<#else>${displayFormat!?html}</#if>" />
+        <div style="position:relative;">
+            <input id="${elementParamName!}_${element.properties.elementUniqueKey!}" name="${elementParamName!}" autocomplete="off" class="textfield_${element.properties.elementUniqueKey!} hasDatepicker" type="text" size="" value="${value!?html}" maxlength="100" <#if error??>class="form-error-cell"</#if> <#if element.properties.readonly! == 'true'>readonly</#if> placeholder="<#if (element.properties.placeholder! != '')>${element.properties.placeholder!?html}<#else>${displayFormat!?html}</#if>" />
+            <a class="trigger" href="#" style="position: absolute !important; padding:8px 5px !important; right: 0 !important; display: inline-block !important;" id="cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}"><img class="ui-datepicker-trigger" src="/jw/css/images/calendar.png" alt="..." title="..."></a>
+        </div>
     </#if>
 
     <script type="text/javascript">
         $("#${elementParamName!}_${element.properties.elementUniqueKey!}").hijriDatePicker({
             showSwitcher: false,
-            allowInputToggle: false,
+            allowInputToggle: true,
             showTodayButton: false,
             useCurrent: true,
             viewMode:'days',
@@ -37,6 +40,11 @@
             dayViewHeaderFormat: "MMMM YYYY",
             hijriDayViewHeaderFormat: "iMMMM iYYYY"
         });
+
+        $("#cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}").on('click', function() {
+            $("#${elementParamName!}_${element.properties.elementUniqueKey!}").focus();
+        })
+
     </script>     
 </div>
 
