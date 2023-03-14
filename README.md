@@ -8,6 +8,7 @@ Hijri date picker plugin is a form element which allows to select/pick date in H
 * The date picker is in Hijri Format
 * Allows to store and load the dates / previous values
 * Allow to customize the display date formats e.g. yy-mm-dd, dd-mm-yy etc
+* Datelist formatter allow to format dates either in hijri or gregorian calendar format
 
 # Getting Help
 

@@ -1,0 +1,30 @@
+[
+    {
+        title:'@@datalist.hijriformatter.config@@',
+        properties:[
+            {
+                name:'formatting',
+                label:'@@datalist.defaultformatter.formatting@@',
+                type:'radio',
+                required : 'True',
+                options:[
+                    {
+                        value:'@@datalist.hijriformatter.dateFormatHijriValue@@',
+                        label:'@@datalist.hijriformatter.dateFormatHijriLabel@@'
+                    },
+                    {
+                        value:'@@datalist.hijriformatter.dateFormatGregorianValue@@',
+                        label:'@@datalist.hijriformatter.dateFormatGregorianLabel@@'
+                    }
+                ]
+            },
+            {
+                name:'format',
+                label:'@@datalist.hijriformatter.dateFormatPattern@@',
+                description:'@@datalist.hijriformatter.dateFormatPatternDesc@@',
+                type:'textfield',
+                required : 'True'
+            }
+        ]
+    }
+]

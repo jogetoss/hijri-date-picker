@@ -1,4 +1,4 @@
-package org.joget.marketplace.hijripicker;
+package org.joget.marketplace;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +15,7 @@ public class Activator implements BundleActivator {
 
         //Register plugin here
         registrationList.add(context.registerService(HijriDatePicker.class.getName(), new HijriDatePicker(), null));
+        registrationList.add(context.registerService(HijriDateFormatter.class.getName(), new HijriDateFormatter(), null));
     }
 
     public void stop(BundleContext context) {

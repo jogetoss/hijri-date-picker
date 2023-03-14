@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.2
+* Added the datalist formatter to format the dates in hijri / gregorian calendar format
+
 ## 7.0.1
 * Stores the date in timestamp format in the database
 * Added ummalqura-calendar to handle the hijri date on both save and load of element

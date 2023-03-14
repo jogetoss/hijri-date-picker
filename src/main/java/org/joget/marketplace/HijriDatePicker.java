@@ -1,4 +1,4 @@
-package org.joget.marketplace.hijripicker;
+package org.joget.marketplace;
 
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
 import java.time.LocalDate;
@@ -171,7 +171,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getVersion() {
-        return "7.0.1";
+        return "7.0.2";
     }
 
     @Override
