@@ -24,32 +24,47 @@ public class HijriDateFormatter extends DataListColumnFormatDefault {
         if (colVal != null && !colVal.isEmpty()) {
             String formatting = getPropertyString("formatting");
             String format = getPropertyString("format");
-            if (format != null && !format.isEmpty()) {
-                if (FORMAT_HIJRI.equals(formatting)) {
-                    DateTime dt = new DateTime(Long.parseLong(colVal));
-                    int calYear = dt.get(DateTimeFieldType.year());
-                    int calMonth = dt.get(DateTimeFieldType.monthOfYear());
-                    int calDay = dt.get(DateTimeFieldType.dayOfMonth());
-                    LocalDate date = LocalDate.of(calYear, calMonth, calDay);
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-                        value = HijrahChronology.INSTANCE.date(date).format(formatter);
-                    } catch (Exception e) {
-                        LogUtil.error(getClassName(), e, e.getMessage());
+            boolean isValidTimestamp = isValidTimestamp(colVal);
+            if (isValidTimestamp) {
+                if (format != null && !format.isEmpty()) {
+                    if (FORMAT_HIJRI.equals(formatting)) {
+                        DateTime dt = new DateTime(Long.parseLong(colVal));
+                        int calYear = dt.get(DateTimeFieldType.year());
+                        int calMonth = dt.get(DateTimeFieldType.monthOfYear());
+                        int calDay = dt.get(DateTimeFieldType.dayOfMonth());
+                        LocalDate date = LocalDate.of(calYear, calMonth, calDay);
+                        try {
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                            value = HijrahChronology.INSTANCE.date(date).format(formatter);
+                        } catch (Exception e) {
+                            LogUtil.error(getClassName(), e, e.getMessage());
+                        }
                     }
-                }
-                if (FORMAT_GREGORIAN.equals(formatting)) {
-                    Date simpleDate = new Date(Long.parseLong(colVal));
-                    SimpleDateFormat sdf = new SimpleDateFormat(format);
-                    try {
-                        value = sdf.format(simpleDate);
-                    } catch (Exception e) {
-                        LogUtil.error(getClassName(), e, e.getMessage());
+                    if (FORMAT_GREGORIAN.equals(formatting)) {
+                        Date simpleDate = new Date(Long.parseLong(colVal));
+                        SimpleDateFormat sdf = new SimpleDateFormat(format);
+                        try {
+                            value = sdf.format(simpleDate);
+                        } catch (Exception e) {
+                            LogUtil.error(getClassName(), e, e.getMessage());
+                        }
                     }
                 }
             }
         }
         return (String) value;
+    }
+
+    public static boolean isValidTimestamp(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
