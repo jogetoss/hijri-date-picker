@@ -15,7 +15,9 @@
     <#else>
         <div style="position:relative;">
             <input id="${elementParamName!}_${element.properties.elementUniqueKey!}" name="${elementParamName!}" autocomplete="off" class="textfield_${element.properties.elementUniqueKey!} hasDatepicker" type="text" size="" value="${value!?html}" maxlength="100" <#if error??>class="form-error-cell"</#if> <#if element.properties.readonly! == 'true'>readonly</#if> placeholder="<#if (element.properties.placeholder! != '')>${element.properties.placeholder!?html}<#else>${displayFormat!?html}</#if>" />
-            <a class="trigger" href="#" style="position: absolute !important; padding:8px 5px !important; right: 0 !important; display: inline-block !important;" id="cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}"><img class="ui-datepicker-trigger" src="/jw/css/images/calendar.png" alt="..." title="..."></a>
+            <#if (element.properties.readonly! != 'true' && element.properties.readonlyLabel! != 'true') >
+                <a class="trigger" href="#" style="position: absolute !important; padding:8px 5px !important; right: 0 !important; display: inline-block !important;" id="cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}"><img class="ui-datepicker-trigger" src="/jw/css/images/calendar.png" alt="..." title="..."></a>
+            </#if>
         </div>
     </#if>
 
