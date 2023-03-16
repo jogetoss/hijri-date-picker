@@ -1,7 +1,5 @@
 # Description
 
-**This plugin is still in development process**
-
 Hijri Date Picker plugin is a form element which allows to select/pick date in Hijri format.
 
 ## Features
