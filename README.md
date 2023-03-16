@@ -2,13 +2,16 @@
 
 **This plugin is still in development process**
 
-Hijri date picker plugin is a form element which allows to select/pick date in Hijri format.
+Hijri Date Picker plugin is a form element which allows to select/pick date in Hijri format.
 
 ## Features
-* The date picker is in Hijri Format
-* Allows to store and load the dates / previous values
-* Allow to customize the display date formats e.g. yy-mm-dd, dd-mm-yy etc
-* Datelist formatter allow to format dates either in hijri or gregorian calendar format
+* The date picker (Hijri Date Picker) is in Hijri Format
+* Allow to customize the display date formats (jQuery format) e.g. yy-mm-dd, dd-mm-yy etc
+* Comes with a datelist formatter (Hijri Date Formatter) to format dates to Hijri or Gregorian Calendar format
+* If the display format at picker is blank, it sets the display format default to dd-mm-yyyy
+
+## Roadmap
+* Feature to allow switch between Hijri & Gregorian Calendar in date selection.
 
 # Getting Help
 
