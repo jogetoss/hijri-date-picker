@@ -2,8 +2,9 @@
 
     <#if !(request.getAttribute("org.joget.marketplace.hijripicker.HijriDatePicker_EDITABLE")??)>
         <link rel="stylesheet" href="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/all.min.css"/>
         <script type="text/javascript" src="${request.contextPath}/plugin/org.joget.apps.form.lib.DatePicker/js/jquery.placeholder.min.js"></script>
-        <script src="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/bootstrap.min.js"></script>
         <script src="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/moment-hijri.min.js"></script>
         <script src="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/bootstrap-hijri-datetimepicker.js"></script>
     </#if>
@@ -14,10 +15,12 @@
         <input id="${elementParamName!}" name="${elementParamName!}" class="textfield_${element.properties.elementUniqueKey!}" type="hidden" value="${value!?html}" />
     <#else>
         <div style="position:relative;">
-            <input id="${elementParamName!}_${element.properties.elementUniqueKey!}" name="${elementParamName!}" autocomplete="off" class="textfield_${element.properties.elementUniqueKey!} hasDatepicker" type="text" size="" value="${value!?html}" maxlength="100" <#if error??>class="form-error-cell"</#if> <#if element.properties.readonly! == 'true'>readonly</#if> placeholder="<#if (element.properties.placeholder! != '')>${element.properties.placeholder!?html}<#else>${displayFormat!?html}</#if>" />
-            <#if (element.properties.readonly! != 'true' && element.properties.readonlyLabel! != 'true') >
-                <a class="trigger" href="#" style="position: absolute !important; padding:8px 5px !important; right: 0 !important; display: inline-block !important;" id="cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}"><img class="ui-datepicker-trigger" src="/jw/css/images/calendar.png" alt="..." title="..."></a>
-            </#if>
+            <div class="input-group">
+                <input id="${elementParamName!}_${element.properties.elementUniqueKey!}" name="${elementParamName!}" aria-label="Select date" aria-describedby="calendar-icon" autocomplete="off" class="form-control" type="text" size="" value="${value!?html}" maxlength="100" <#if error??>class="form-error-cell"</#if> <#if element.properties.readonly! == 'true'>readonly</#if> placeholder="<#if (element.properties.placeholder! != '')>${element.properties.placeholder!?html}<#else>${displayFormat!?html}</#if>" />
+                <#if (element.properties.readonly! != 'true' || element.properties.readonlyLabel! != 'true') >
+                    <span class="input-group-text" id="hijri-calicon-${elementParamName!}_${element.properties.elementUniqueKey!}"><i class="fas fa-calendar-alt"></i></span>
+                </#if>
+            </div>
         </div>
     </#if>
 
@@ -41,13 +44,12 @@
             hijriFormat: "${displayFormat}",
             dayViewHeaderFormat: "MMMM YYYY",
             hijriDayViewHeaderFormat: "iMMMM iYYYY"
+            <#if element.properties.currentDateAs! != ''>
+                ,${element.properties.currentDateAs}: "${minMaxDate}"
+            </#if>
         });
-
-        $("#cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}").on('click', function() {
+        $("#hijri-calicon-${elementParamName!}_${element.properties.elementUniqueKey!}").on('click', function() {
             $("#${elementParamName!}_${element.properties.elementUniqueKey!}").focus();
         })
-
     </script>     
 </div>
-
-

@@ -1,12 +1,14 @@
 package org.joget.marketplace;
 
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.chrono.HijrahChronology;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +32,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
         String template = "hijriDatePicker.ftl";
         String value = FormUtil.getElementPropertyValue(this, formData);
         String displayFormat = getPropertyString("format");
+        String currentDateAs = getPropertyString("currentDateAs");
 
         if (value != null && !value.isEmpty()) {
             if (displayFormat == null || displayFormat.isEmpty()) {
@@ -52,6 +55,12 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
         String hijriDisplayFormat = "iDD-iMM-iYYYY";
         if (displayFormat != null && !displayFormat.isEmpty()) {
             hijriDisplayFormat = hijriDisplayFormat(displayFormat);
+        }
+        
+        if(currentDateAs != null && !currentDateAs.isEmpty()) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String minMaxDate = sdf.format(new Date());
+            dataModel.put("minMaxDate", minMaxDate);
         }
 
         dataModel.put("value", value);
@@ -171,7 +180,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getVersion() {
-        return "7.0.2";
+        return "7.0.3";
     }
 
     @Override

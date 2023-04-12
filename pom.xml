@@ -4,7 +4,7 @@
     <groupId>org.joget.marketplace</groupId>
     <artifactId>hijri-date-picker</artifactId>
     <packaging>bundle</packaging>
-    <version>7.0.2</version>
+    <version>7.0.3</version>
     <name>hijri-date-picker</name>
     <url>http://www.joget.org</url>
     <build>
