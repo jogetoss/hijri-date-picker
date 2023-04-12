@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.3
+* Added the feature to set the minimum and maximum date validation for calendar
+
 ## 7.0.2
 * Added the datalist formatter to format the dates in hijri / gregorian calendar format
 
