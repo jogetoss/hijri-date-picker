@@ -50,6 +50,16 @@
                 }]
             },
             {
+                name : 'minMaxFieldId',
+                label : '@@org.joget.datepicker.hijri.element.minMaxFieldId@@',
+                type : 'selectbox',
+                required : 'True',
+                control_field: 'currentDateAs',
+                control_value: '.*Date$',
+                control_use_regex: 'true',
+                options_callback : 'FormBuilder.getFieldOptions'
+            },
+            {
                 label : '@@org.joget.datepicker.hijri.element.ui@@',
                 type : 'header'
             },

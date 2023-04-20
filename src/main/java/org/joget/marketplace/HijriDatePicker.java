@@ -57,12 +57,6 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
             hijriDisplayFormat = hijriDisplayFormat(displayFormat);
         }
         
-        if(currentDateAs != null && !currentDateAs.isEmpty()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String minMaxDate = sdf.format(new Date());
-            dataModel.put("minMaxDate", minMaxDate);
-        }
-
         dataModel.put("value", value);
         dataModel.put("displayFormat", hijriDisplayFormat);
         String html = FormUtil.generateElementHtml(this, formData, template, dataModel);
@@ -180,7 +174,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getVersion() {
-        return "7.0.3";
+        return "7.0.4";
     }
 
     @Override

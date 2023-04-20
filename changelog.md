@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.4
+* Added the feature to set the minimum and maximum date using another hijri date field in the form as reference
+
 ## 7.0.3
 * Added the feature to set the minimum and maximum date validation for calendar
 
