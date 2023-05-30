@@ -1,17 +1,15 @@
 package org.joget.marketplace;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.chrono.HijrahChronology;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.datalist.model.DataList;
 import org.joget.apps.datalist.model.DataListColumn;
 import org.joget.apps.datalist.model.DataListColumnFormatDefault;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
 import org.joget.commons.util.LogUtil;
+
+import java.time.LocalDate;
+import java.time.chrono.HijrahChronology;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
 
 public class HijriDateFormatter extends DataListColumnFormatDefault {
 
@@ -22,36 +20,32 @@ public class HijriDateFormatter extends DataListColumnFormatDefault {
     public String format(DataList dataList, DataListColumn column, Object row, Object value) {
         String colVal = (String) value;
         if (colVal != null && !colVal.isEmpty()) {
+
             String formatting = getPropertyString("formatting");
             String format = getPropertyString("format");
-            boolean isValidTimestamp = isValidTimestamp(colVal);
-            if (isValidTimestamp) {
-                if (format != null && !format.isEmpty()) {
-                    if (FORMAT_HIJRI.equals(formatting)) {
-                        DateTime dt = new DateTime(Long.parseLong(colVal));
-                        int calYear = dt.get(DateTimeFieldType.year());
-                        int calMonth = dt.get(DateTimeFieldType.monthOfYear());
-                        int calDay = dt.get(DateTimeFieldType.dayOfMonth());
-                        LocalDate date = LocalDate.of(calYear, calMonth, calDay);
-                        try {
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-                            value = HijrahChronology.INSTANCE.date(date).format(formatter);
-                        } catch (Exception e) {
-                            LogUtil.error(getClassName(), e, e.getMessage());
-                        }
+            if (format != null && !format.isEmpty()) {
+                if (FORMAT_HIJRI.equals(formatting)) {
+                    //since saving it as iDD-iMM-iYYYY we can use separator and takes the month year and day
+                    String[] dates = colVal.split("-");
+                    try {
+                        HijrahDate hijriDate = HijrahChronology.INSTANCE.date(Integer.parseInt(dates[2]), Integer.parseInt(dates[1]), Integer.parseInt(dates[0]));
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                        value = hijriDate.format(formatter);
+                    } catch (Exception e) {
+                        LogUtil.error(getClassName(), e, e.getMessage());
                     }
-                    if (FORMAT_GREGORIAN.equals(formatting)) {
-                        Date simpleDate = new Date(Long.parseLong(colVal));
-                        SimpleDateFormat sdf = new SimpleDateFormat(format);
-                        try {
-                            value = sdf.format(simpleDate);
-                        } catch (Exception e) {
-                            LogUtil.error(getClassName(), e, e.getMessage());
-                        }
+                }
+                if (FORMAT_GREGORIAN.equals(formatting)) {
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                        value = LocalDate.parse(colVal).format(formatter);
+                    } catch (Exception e) {
+                        LogUtil.error(getClassName(), e, e.getMessage());
                     }
                 }
             }
         }
+
         return (String) value;
     }
 

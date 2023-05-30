@@ -1,27 +1,17 @@
 package org.joget.marketplace;
 
 import com.github.msarhan.ummalqura.calendar.UmmalquraCalendar;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.chrono.HijrahChronology;
+import org.joget.apps.app.service.AppUtil;
+import org.joget.apps.form.model.*;
+import org.joget.apps.form.service.FormUtil;
+
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joget.apps.app.service.AppUtil;
-import org.joget.apps.form.model.Element;
-import org.joget.apps.form.model.FormBuilderPalette;
-import org.joget.apps.form.model.FormBuilderPaletteElement;
-import org.joget.apps.form.model.FormData;
-import org.joget.apps.form.model.FormRow;
-import org.joget.apps.form.model.FormRowSet;
-import org.joget.apps.form.service.FormUtil;
 
 public class HijriDatePicker extends Element implements FormBuilderPaletteElement {
 
@@ -32,24 +22,12 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
         String template = "hijriDatePicker.ftl";
         String value = FormUtil.getElementPropertyValue(this, formData);
         String displayFormat = getPropertyString("format");
-        String currentDateAs = getPropertyString("currentDateAs");
 
         if (value != null && !value.isEmpty()) {
             if (displayFormat == null || displayFormat.isEmpty()) {
                 displayFormat = DEFAULT_DISPLAY_FORMAT;
             }
 
-            boolean isValidTimestamp = isValidTimestamp(value);
-            if (isValidTimestamp) {
-                String javaDateFormat = getJavaDateFormat(displayFormat);
-                DateTime dt = new DateTime(Long.parseLong(value));
-                int calYear = dt.get(DateTimeFieldType.year());
-                int calMonth = dt.get(DateTimeFieldType.monthOfYear());
-                int calDay = dt.get(DateTimeFieldType.dayOfMonth());
-                LocalDate date = LocalDate.of(calYear, calMonth, calDay);
-                final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(javaDateFormat);
-                value = HijrahChronology.INSTANCE.date(date).format(formatter);
-            }
         }
 
         String hijriDisplayFormat = "iDD-iMM-iYYYY";
@@ -68,22 +46,12 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
         FormRowSet rowSet = null;
         String id = getPropertyString(FormUtil.PROPERTY_ID);
         if (id != null) {
-            long longTime = 0;
             String value = FormUtil.getElementPropertyValue(this, formData);
             //String binderValue = formData.getLoadBinderDataProperty(this, id);
             if (!FormUtil.isReadonly(this, formData)) {
                 if (value != null && !value.isEmpty()) {
-                    // convert the data into the timestamp
-                    String format = getPropertyString("format");
-                    if (format != null && !format.isEmpty()) {
-                        longTime = processDate(value, format);
-                    } else {
-                        longTime = processDate(value, DEFAULT_DISPLAY_FORMAT);
-                    }
-                }
-                if (value != null && !value.isEmpty()) {
                     FormRow result = new FormRow();
-                    result.setProperty(id, String.valueOf(longTime));
+                    result.setProperty(id, value);
                     rowSet = new FormRowSet();
                     rowSet.add(result);
                 }
