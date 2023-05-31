@@ -81,6 +81,15 @@
             "control_use_regex":"true"
          },
          {
+            "name":"dataFormat",
+            "label":"@@org.joget.datepicker.hijri.element.dataFormat@@",
+            "type":"textfield",
+            "description":"@@org.joget.datepicker.hijri.element.dataFormatEg@@",
+            "control_field":"datePickerType",
+            "control_value":"^$|dateTime",
+            "control_use_regex":"true"
+         },
+         {
             "name":"readonly",
             "label":"@@org.joget.datepicker.hijri.element.readonly@@",
             "type":"checkbox",
