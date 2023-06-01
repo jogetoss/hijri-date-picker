@@ -73,21 +73,26 @@
          },
          {
             "name":"format",
+            "value": "dd-mm-yyyy",
             "label":"@@org.joget.datepicker.hijri.element.displayFormat@@",
             "type":"textfield",
             "description":"@@org.joget.datepicker.hijri.element.displayFormatEg@@",
             "control_field":"datePickerType",
             "control_value":"^$|dateTime",
-            "control_use_regex":"true"
+            "control_use_regex":"true",
+            "required": "True"
+
          },
          {
             "name":"dataFormat",
+            "value": "yyyy-mm-dd",
             "label":"@@org.joget.datepicker.hijri.element.dataFormat@@",
             "type":"textfield",
             "description":"@@org.joget.datepicker.hijri.element.dataFormatEg@@",
             "control_field":"datePickerType",
             "control_value":"^$|dateTime",
-            "control_use_regex":"true"
+            "control_use_regex":"true",
+            "required": "True"
          },
          {
             "name":"readonly",
