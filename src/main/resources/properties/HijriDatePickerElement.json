@@ -73,7 +73,7 @@
          },
          {
             "name":"format",
-            "value": "dd-mm-yyyy",
+            "value": "dd-MM-yyyy",
             "label":"@@org.joget.datepicker.hijri.element.displayFormat@@",
             "type":"textfield",
             "description":"@@org.joget.datepicker.hijri.element.displayFormatEg@@",
@@ -85,7 +85,7 @@
          },
          {
             "name":"dataFormat",
-            "value": "yyyy-mm-dd",
+            "value": "yyyy-MM-dd",
             "label":"@@org.joget.datepicker.hijri.element.dataFormat@@",
             "type":"textfield",
             "description":"@@org.joget.datepicker.hijri.element.dataFormatEg@@",
