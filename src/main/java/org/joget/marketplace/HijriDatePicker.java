@@ -3,7 +3,12 @@ package org.joget.marketplace;
 import org.joget.apps.app.service.AppUtil;
 import org.joget.apps.form.model.*;
 import org.joget.apps.form.service.FormUtil;
+import org.joget.commons.util.LogUtil;
 
+import java.time.chrono.HijrahChronology;
+import java.time.chrono.HijrahDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,15 +109,31 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
     @Override
     public FormRowSet formatData(FormData formData) {
         String dataFormat = getPropertyString("dataFormat");
+        String displayFormat = getPropertyString("format");
         FormRowSet rowSet = null;
         String id = getPropertyString(FormUtil.PROPERTY_ID);
         String resultDate = null;
+
         if (id != null) {
             String value = FormUtil.getElementPropertyValue(this, formData);
             String saveDate = getPropertyString("dataFormat");
             String pattern = "[^dMy.\\/\\\\\\\\-]";
             saveDate = saveDate.replaceAll(pattern, "");
-            if (dataFormat != null && !dataFormat.isEmpty()) {
+            DateTimeFormatter hijrahFormatter = DateTimeFormatter.ofPattern(displayFormat)
+                    .withChronology(HijrahChronology.INSTANCE);
+
+            //check if valid date if value is not empty
+            if(!value.isEmpty()) {
+                try {
+                    HijrahDate date = hijrahFormatter.parse(value, HijrahDate::from);
+                } catch (DateTimeParseException ex) {
+                    LogUtil.error(getClassName(), ex, ex.getMessage());
+                    return rowSet;
+                }
+            }
+
+
+            if (dataFormat != null && !dataFormat.isEmpty() && value != null && !value.isEmpty() ) {
                 for (int x = 0; x <= 2; x++) {
                     // 0 = find date
                     // 1 = find month
@@ -127,13 +148,15 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
                         saveDate = checkContains(saveDate,resultDate,x);
                     }
                 }
+            } else {
+                resultDate = "break";
             }
 
             //String binderValue = formData.getLoadBinderDataProperty(this, id);
             if (!FormUtil.isReadonly(this, formData)) {
-                if (value != null && !value.isEmpty()) {
+                if (value != null) {
                     FormRow result = new FormRow();
-                    if (resultDate.equals("break")) {
+                    if (resultDate.equals("break") || value.isEmpty()) {
                         result.setProperty(id, value);
                     } else {
                         result.setProperty(id, saveDate);
