@@ -17,18 +17,6 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     private static final String DEFAULT_DISPLAY_FORMAT = "dd-MM-yy";
 
-    public static boolean isValidTimestamp(String str) {
-        if (str == null) {
-            return false;
-        }
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
     @Override
     public String renderTemplate(FormData formData, Map dataModel) {
         String template = "hijriDatePicker.ftl";
