@@ -8,7 +8,7 @@
         <script src="${request.contextPath}/plugin/org.joget.marketplace.HijriDatePicker/others/bootstrap-hijri-datetimepicker.js"></script>
     </#if>
 
-    <label field-tooltip="${elementParamName!}" class="label" for="${elementParamName!}">${element.properties.label} <span class="form-cell-validator">${decoration}</span><#if error??> <span class="form-error-message">${error}</span></#if></label>
+    <label field-tooltip="${elementParamName!}" class="label" for="${elementParamName!}_${element.properties.elementUniqueKey!}">${element.properties.label} <span class="form-cell-validator">${decoration}</span><#if error??> <span class="form-error-message">${error}</span></#if></label>
     <#if (element.properties.readonly! == 'true' && element.properties.readonlyLabel! == 'true') >
         <div class="form-cell-value"><span>${value!?html}</span></div>
         <input id="${elementParamName!}" name="${elementParamName!}" class="textfield_${element.properties.elementUniqueKey!}" type="hidden" value="${value!?html}" />
@@ -43,10 +43,5 @@
                 ,minMaxIndicator: "${element.properties.currentDateAs}"
             </#if>
         });
-
-        $("#cal_trigger_${elementParamName!}_${element.properties.elementUniqueKey!}").on('click', function() {
-            $("#${elementParamName!}_${element.properties.elementUniqueKey!}").click();
-        })
-
     </script>     
 </div>
