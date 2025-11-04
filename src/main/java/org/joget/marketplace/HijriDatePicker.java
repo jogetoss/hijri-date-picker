@@ -223,7 +223,7 @@ public class HijriDatePicker extends Element implements FormBuilderPaletteElemen
 
     @Override
     public String getVersion() {
-        return "7.0.5";
+        return "7.0.6";
     }
 
     @Override
